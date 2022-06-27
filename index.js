@@ -1,9 +1,20 @@
 const core = require('@actions/core');
+const AWS = require('aws-sdk');
 
 try {
   const path = core.getInput('path');
   console.log(`Hello ${path}!`);
-  console.log(`AWS_ACCESS_KEY_ID: ${process.env.AWS_ACCESS_KEY_ID}`)
+
+  const ssm = new AWS.SSM();
+  const params =
+    {
+      Path: path,
+      Recursive: true,
+      WithDecryption: true
+    };
+
+  const result = await ssm.getParametersByPath(params).promise();
+  console.log(`result: ${JSON.stringify(result)}`)
 }
 catch (error) {
   core.setFailed(error.message);
