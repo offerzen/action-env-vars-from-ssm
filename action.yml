@@ -1,12 +1,17 @@
-name: 'Hello Secrets!'
-description: 'Log out hello Secret'
+name: 'Export environment variables'
+description: 'Reads variables from AWS Parameter Store and sets them as react environment variables during build time.'
+
 inputs:
-  ssm_param_name:  # id of input
-    description: 'Name of the Param'
+  path:
+    description: 'Path of environment variables to set'
     required: true
-outputs:
-  ssm_param_value: # id of output
-    description: 'Value of the param'
+  decryption:
+    description: 'Whether to decrypt secrets or not. Defaults to true.'
+    required: false
+  prefix:
+    description: 'Prefix to add to exported environment variables.'
+    required: false
+
 runs:
   using: 'node16'
   main: 'index.js'

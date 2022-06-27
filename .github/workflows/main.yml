@@ -1,16 +1,23 @@
 on: [push]
 
 jobs:
-  hello_secret_job:
+  test-export-environment-variables:
     runs-on: ubuntu-latest
-    name: A job to say hello secret
+    name: Test
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Hello secret action step
+
+      - name: Run action
         uses: ./
-        id: hello
         with:
-          ssm_param_name: 'some/param/name'
-      - name: Get the output value
-        run: echo "The time was ${{ steps.hello.outputs.ssm_param_value }}"
+          path: '/app/'
+          prefix: 'REACT_APP_'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'eu-west-1'
+          AWS_ROLE_ARN: 'arn:aws:iam::463037328738:role/human/OZHumanAdmin'
+
+      - name: View vars
+        run: echo "view"
