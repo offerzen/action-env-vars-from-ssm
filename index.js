@@ -8,11 +8,6 @@ async function run_action() {
     const prefix = core.getInput('prefix');
     const role_arn = process.env.AWS_ROLE_ARN;
 
-    // New
-    // const path = '/shared/'
-    // const decryption = true
-    // const prefix = 'REACT_APP_'
-
     try {
       const parameters = await fetchParameters(path, decryption, role_arn)
       SetEnvironmentVariables(parameters, prefix)
