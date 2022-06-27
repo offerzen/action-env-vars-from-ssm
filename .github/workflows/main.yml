@@ -17,3 +17,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: 'eu-west-1'
           AWS_ROLE_ARN: 'arn:aws:iam::463037328738:role/human/OZHumanAdmin'
+
+      - name: View vars
+        run: echo "view"
