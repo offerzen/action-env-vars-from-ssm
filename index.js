@@ -8,7 +8,17 @@ async function run_action() {
     console.log(`Hello ${path}!`);
 
     AWS.config.update({region: process.env.AWS_DEFAULT_REGION});
-    const sts = new AWS.STS();
+    var params = {
+      RoleArn: process.env.AWS_ROLE_ARN,
+      RoleSessionName: "testAssumeRoleSession"
+    }
+      const sts = new AWS.STS();
+
+    sts.assumeRole(params, function (err, data) {
+      if (err) console.log(err, err.stack);
+      else console.log(data);
+    });
+
     sts.getCallerIdentity({}, function (err, data) {
       if (err) console.log(err, err.stack);
       else console.log(data);
