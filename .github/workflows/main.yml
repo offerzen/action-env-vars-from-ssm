@@ -14,10 +14,10 @@ jobs:
           path: '/app/'
           prefix: 'REACT_APP_'
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.ORG_AWS_ACCESS_KEY_ID_GHA }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.ORG_AWS_SECRET_ACCESS_KEY_GHA }}
           AWS_DEFAULT_REGION: 'eu-west-1'
-          AWS_ROLE_ARN: 'arn:aws:iam::463037328738:role/human/OZHumanAdmin'
+          AWS_ROLE_ARN: ${{ secrets.ORG_AWS_ROLE_ARN_GHA_DEVOPS }}
 
       - name: View vars
         run: echo "view"
