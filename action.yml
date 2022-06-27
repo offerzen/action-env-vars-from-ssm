@@ -1,8 +1,9 @@
-name: 'Hello Secrets!'
-description: 'Log out hello Secret'
+name: ''
+description: ''
+
 inputs:
-  ssm_param_name:
-    description: 'Name of the Param'
+  path:
+    description: 'Path'
     required: true
 
 runs:

@@ -19,6 +19,7 @@
   "homepage": "https://github.com/offerzen/export_environment_variables#readme",
   "dependencies": {
     "@actions/core": "^1.9.0",
-    "@actions/github": "^5.0.3"
+    "@actions/github": "^5.0.3",
+    "aws-sdk": "^2.1162.0"
   }
 }

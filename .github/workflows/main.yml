@@ -1,15 +1,14 @@
 on: [push]
 
 jobs:
-  hello_secret_job:
+  test-export-environment-variables:
     runs-on: ubuntu-latest
-    name: A job to say hello secret
+    name: Test
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Hello secret action step
+      - name: Run action
         uses: ./
-        id: hello
         with:
-          ssm_param_name: 'some/param/name'
+          path: '/shared/'
