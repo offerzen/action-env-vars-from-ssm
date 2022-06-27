@@ -11,7 +11,7 @@ jobs:
       - name: Run action
         uses: ./
         with:
-          path: '/app/'
+          path: '/shared/'
           prefix: 'REACT_APP_'
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ORG_AWS_ACCESS_KEY_ID_GHA }}
