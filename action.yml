@@ -1,10 +1,16 @@
-name: ''
-description: ''
+name: 'Export environment variables'
+description: 'Reads variables from AWS Parameter Store and sets them as react environment variables during build time.'
 
 inputs:
   path:
-    description: 'Path'
+    description: 'Path of environment variables to set'
     required: true
+  decryption:
+    description: 'Whether to decrypt secrets or not. Defaults to true.'
+    required: false
+  prefix:
+    description: 'Prefix to add to exported environment variables.'
+    required: false
 
 runs:
   using: 'node16'
