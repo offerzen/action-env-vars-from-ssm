@@ -1,12 +1,10 @@
 name: 'Hello Secrets!'
 description: 'Log out hello Secret'
 inputs:
-  ssm_param_name:  # id of input
+  ssm_param_name:
     description: 'Name of the Param'
     required: true
-outputs:
-  ssm_param_value: # id of output
-    description: 'Value of the param'
+
 runs:
   using: 'node16'
   main: 'index.js'

@@ -7,10 +7,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Hello secret action step
         uses: ./
         id: hello
         with:
           ssm_param_name: 'some/param/name'
-      - name: Get the output value
-        run: echo "The time was ${{ steps.hello.outputs.ssm_param_value }}"
