@@ -1,0 +1,15 @@
+##############
+## Taskfile ##
+##############
+version: 3
+
+silent: true
+
+tasks:
+  release:
+    desc: 'Releases latest master'
+    cmds:
+      - git checkout master
+      - git pull
+      - git tag -f -a v1
+      - git push -f --tags

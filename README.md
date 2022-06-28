@@ -43,7 +43,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Run action
-        uses: offerzen/export_environment_variables@v1.2
+        uses: offerzen/export_environment_variables@v1
         with:
           path: '/shared/'
           prefix: 'REACT_APP_'
@@ -56,6 +56,10 @@ jobs:
         run: echo "Expand the job config to see the environment variables."
 ```
 
-## Versions
+## Contributing
 
-Go to [Releases](https://github.com/offerzen/export_environment_variables/releases) to see the release versions.
+Once changes have been merged into master, run:
+```
+task release
+```
+from a terminal.
