@@ -9,8 +9,7 @@ async function run_action() {
 
     try {
       core.info('Fetching parameters from AWS...')
-      const result = await fetchParameters(path, decryption)
-      const parameters = result.Parameters
+      const parameters = await fetchParameters(path, decryption)
       core.info(`Fetched ${parameters.length} parameters.`)
       SetEnvironmentVariables(parameters, prefix)
     } catch (e) {
