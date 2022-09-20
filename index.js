@@ -9,7 +9,9 @@ async function run_action() {
     const role_arn = process.env.AWS_ROLE_ARN;
 
     try {
+      core.info('Fetching parameters from AWS...')
       const parameters = await fetchParameters(path, decryption, role_arn)
+      core.info(`Fetched ${parameters.length} parameters.`)
       SetEnvironmentVariables(parameters, prefix)
     } catch (e) {
       core.setFailed(e.message);
@@ -42,6 +44,7 @@ function SetEnvironmentVariables(parameters, prefix) {
     const value = parameter.Value
     const secret = parameter.Type === 'SecureString'
 
+    core.info(`Setting environment variable from parameter ${name}.`)
     setEnvironmentVar(name, value, secret)
   }
 }
