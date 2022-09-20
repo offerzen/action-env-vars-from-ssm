@@ -3,8 +3,6 @@ const AWS = require('aws-sdk');
 
 const role_arn = process.env.AWS_ROLE_ARN;
 
-run_action();
-
 async function run_action() {
   try {
     const path = core.getInput('path', {required: true});
@@ -87,3 +85,5 @@ const getAssumeRoleCredentials = async (role_arn) => {
     });
   });
 }
+
+run_action();
