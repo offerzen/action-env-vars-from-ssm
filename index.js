@@ -2,8 +2,6 @@ const core = require('@actions/core');
 const AWS = require('aws-sdk');
 
 const role_arn = process.env.AWS_ROLE_ARN;
-const assume_role_credentials = await getAssumeRoleCredentials(role_arn);
-const ssm = new AWS.SSM(assume_role_credentials);
 
 run_action();
 
@@ -29,6 +27,9 @@ async function run_action() {
 }
 
 const fetchParameters = async (path, withDecryption = true, params = [], nextToken = undefined) => {
+  const assume_role_credentials = await getAssumeRoleCredentials(role_arn);
+  const ssm = new AWS.SSM(assume_role_credentials);
+
   return ssm
     .getParametersByPath({ Path: path, Recursive: true, WithDecryption: withDecryption, NextToken: nextToken, MaxResults: 10 })
     .promise()
