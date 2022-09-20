@@ -1,16 +1,22 @@
 const core = require('@actions/core');
 const AWS = require('aws-sdk');
 
+const role_arn = process.env.AWS_ROLE_ARN;
+const assume_role_credentials = await getAssumeRoleCredentials(role_arn);
+const ssm = new AWS.SSM(assume_role_credentials);
+
+run_action();
+
 async function run_action() {
   try {
     const path = core.getInput('path', {required: true});
     const decryption = core.getInput('decryption') === 'true';
     const prefix = core.getInput('prefix');
-    const role_arn = process.env.AWS_ROLE_ARN;
 
     try {
       core.info('Fetching parameters from AWS...')
-      const parameters = await fetchParameters(path, decryption, role_arn)
+      const result = await fetchParameters(path, decryption)
+      const parameters = result.Parameters
       core.info(`Fetched ${parameters.length} parameters.`)
       SetEnvironmentVariables(parameters, prefix)
     } catch (e) {
@@ -22,19 +28,14 @@ async function run_action() {
   }
 }
 
-const fetchParameters = async (path, decryption, role_arn) => {
-  const assume_role_credentials = await getAssumeRoleCredentials(role_arn);
-  const ssm = new AWS.SSM(assume_role_credentials);
-
-  const params =
-    {
-      Path: path,
-      Recursive: true,
-      WithDecryption: decryption
-    };
-
-  const result = await ssm.getParametersByPath(params).promise();
-  return result.Parameters
+const fetchParameters = async (path, withDecryption = true, params = [], nextToken = undefined) => {
+  return ssm
+    .getParametersByPath({ Path: path, Recursive: true, WithDecryption: withDecryption, NextToken: nextToken, MaxResults: 10 })
+    .promise()
+    .then(({ Parameters, NextToken }) => {
+      const moreParams = params.concat(Parameters);
+      return NextToken ? fetchRecursively(path, withDecryption, moreParams, NextToken) : moreParams;
+    });
 }
 
 function SetEnvironmentVariables(parameters, prefix) {
@@ -85,5 +86,3 @@ const getAssumeRoleCredentials = async (role_arn) => {
     });
   });
 }
-
-run_action();
