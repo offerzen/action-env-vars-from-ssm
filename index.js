@@ -32,7 +32,7 @@ const fetchParameters = async (path, withDecryption = true, params = [], nextTok
     .promise()
     .then(({ Parameters, NextToken }) => {
       const moreParams = params.concat(Parameters);
-      return NextToken ? fetchRecursively(path, withDecryption, moreParams, NextToken) : moreParams;
+      return NextToken ? fetchParameters(path, withDecryption, moreParams, NextToken) : moreParams;
     });
 }
 
