@@ -1,0 +1,11 @@
+on:
+  push
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        tests: [controllers, services, everything-else, brakeman, jest]
+    steps:
+      - name: Now running tests for ${{ matrix.tests }}
+        run: echo "running ${{ matrix.tests }}"
