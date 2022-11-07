@@ -49,7 +49,7 @@ function SetEnvironmentVariables(parameters, prefix) {
 
 function formatName(name, prefix) {
   const split = name.split('/');
-  return prefix + split[split.length - 1];
+  return prefix + split[split.length - 1].replace('-', '_').toUpperCase();
 }
 
 function setEnvironmentVar(key, value, secret) {
